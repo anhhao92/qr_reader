@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "1017344666510",
+    "project_id": "flutter-backend-26506",
+    "storage_bucket": "flutter-backend-26506.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017344666510:android:8d310802c555bc9f3412df",
+        "android_client_info": {
+          "package_name": "com.haotran.newspaper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1017344666510-fira5f0qn6jg9gjr88l0m6ua1q9pnju7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFqxjpYWHLevxBF1Z7kyTvCaIwZtvnR6o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1017344666510-fira5f0qn6jg9gjr88l0m6ua1q9pnju7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017344666510:android:24610dbf452b04243412df",
+        "android_client_info": {
+          "package_name": "com.haotran.qr_barcode_ai_scanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1017344666510-fira5f0qn6jg9gjr88l0m6ua1q9pnju7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFqxjpYWHLevxBF1Z7kyTvCaIwZtvnR6o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1017344666510-fira5f0qn6jg9gjr88l0m6ua1q9pnju7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
