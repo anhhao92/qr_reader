@@ -1,6 +1,8 @@
+import 'package:ai_barcode/providers/app_state.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:provider/provider.dart';
 
 class AdBanner extends StatefulWidget {
   const AdBanner({Key? key}) : super(key: key);
@@ -34,7 +36,8 @@ class AdBannerState extends State<AdBanner> {
 
   @override
   Widget build(BuildContext context) {
-    if (bannerAd != null) {
+    final showAds = Provider.of<AppState>(context).showAds;
+    if (showAds && bannerAd != null) {
       return SizedBox(
         height: 50,
         child: AdWidget(ad: bannerAd!),

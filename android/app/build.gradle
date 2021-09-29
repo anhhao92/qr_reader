@@ -71,7 +71,13 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.release
             aaptOptions {
-                ignoreAssetsPattern 'mlkit_pose'
+                ignoreAssetsPattern '!mlkit_pose:!mlkit_label_default_model:'
+            }
+        }
+        debug {
+            signingConfig signingConfigs.debug
+            aaptOptions {
+                ignoreAssetsPattern '!mlkit_pose:!mlkit_label_default_model:'
             }
         }
     }

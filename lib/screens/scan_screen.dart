@@ -24,7 +24,7 @@ class _ScanScreenState extends State<ScanScreen> {
   late CameraDescription camera;
   bool isBusy = false;
   CustomPaint? customPaint;
-  ScreenMode _mode = ScreenMode.liveFeed;
+  ScreenMode _mode = ScreenMode.gallery;
 
   Future<void> processImage(InputImage inputImage) async {
     if (isBusy) {
@@ -124,6 +124,7 @@ class _ScanScreenState extends State<ScanScreen> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    var appState = Provider.of<AppState>(context);
 
     return Scaffold(
         appBar: AppBar(
@@ -152,12 +153,18 @@ class _ScanScreenState extends State<ScanScreen> {
                 leading: const Icon(Icons.history),
                 title: const Text('History'),
                 onTap: () => Navigator.of(context).popAndPushNamed('/history')),
+            if (appState.showAds)
+              ListTile(
+                  minLeadingWidth: 20,
+                  leading: const Icon(Icons.monetization_on),
+                  title: const Text('Remove Ads'),
+                  onTap: () => Navigator.of(context).popAndPushNamed('/remove-ads')),
           ],
         )),
         body: Column(
           children: [
             Expanded(child: _buildBody()),
-            const AdBanner(),
+            if (_mode == ScreenMode.gallery) const AdBanner(),
           ],
         ),
         floatingActionButton: Visibility(
