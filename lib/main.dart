@@ -1,3 +1,4 @@
+import 'package:ai_barcode/screens/create_qr_screen.dart';
 import 'package:ai_barcode/screens/remove_ads_screen.dart';
 import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,7 +17,7 @@ import 'screens/scan_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-   if (defaultTargetPlatform == TargetPlatform.android) {
+  if (defaultTargetPlatform == TargetPlatform.android) {
     InAppPurchaseAndroidPlatformAddition.enablePendingPurchases();
   }
   MobileAds.instance.initialize();
@@ -40,11 +41,12 @@ class MyApp extends StatelessWidget {
           title: 'AI QR & Barcode Reader',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            primarySwatch: Colors.green,
           ),
           home: ScanScreen(cameras: cameras),
           routes: {
             HistoryScreen.routeName: (ctx) => const HistoryScreen(),
+            CreateQRCode.routeName: (ctx) => const CreateQRCode(),
             ScanResultScreen.routeName: (ctx) => const ScanResultScreen(),
             RemoveAdsScreen.routeName: (ctx) => const RemoveAdsScreen()
           }),

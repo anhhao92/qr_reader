@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 class LiveMode extends StatefulWidget {
   final Function switchScreenMode;
-  final CustomPaint? customPaint;
   final CameraDescription camera;
   final Function(CameraImage) processCameraImage;
 
@@ -12,7 +11,6 @@ class LiveMode extends StatefulWidget {
 
   const LiveMode({
     Key? key,
-    required this.customPaint,
     required this.switchScreenMode,
     required this.camera,
     required this.processCameraImage,
@@ -39,7 +37,7 @@ class _LiveModeState extends State<LiveMode> {
   initCamera() async {
     _controller = CameraController(
       widget.camera,
-      ResolutionPreset.low,
+      ResolutionPreset.medium,
       enableAudio: false,
       imageFormatGroup: ImageFormatGroup.yuv420,
     );
@@ -98,7 +96,6 @@ class _LiveModeState extends State<LiveMode> {
         fit: StackFit.expand,
         children: <Widget>[
           CameraPreview(_controller),
-          if (widget.customPaint != null) widget.customPaint!,
           _buildCameraOverlay(padding: 50, aspectRatio: 1),
           Align(
             alignment: Alignment.topRight,

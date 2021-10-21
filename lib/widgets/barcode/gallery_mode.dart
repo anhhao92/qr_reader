@@ -5,14 +5,12 @@ import 'dart:io';
 
 class GalleryMode extends StatefulWidget {
   final Function(InputImage inputImage) processImage;
-  final CustomPaint? customPaint;
 
   @override
   State<GalleryMode> createState() => _GalleryModeState();
 
   const GalleryMode({
     Key? key,
-    required this.customPaint,
     required this.processImage,
   }) : super(key: key);
 }
@@ -51,7 +49,6 @@ class _GalleryModeState extends State<GalleryMode> {
             fit: StackFit.expand,
             children: <Widget>[
               Image.file(_image!),
-              if (widget.customPaint != null) widget.customPaint!,
             ],
           ),
         )

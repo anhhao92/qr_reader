@@ -40,6 +40,7 @@ class QRDetail extends StatelessWidget {
     switch (model.type) {
       case BarcodeType.wifi:
         var barcodeWifi = model as QRCodeWifi;
+        var auth = { 0: 'No authentication', 1: 'WPA', 2: 'WPA2'};
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -48,12 +49,12 @@ class QRDetail extends StatelessWidget {
                 const Text('SSID: ',
                     style: TextStyle(
                       overflow: TextOverflow.ellipsis,
-                      fontSize: 18,
+                      fontSize: 16,
                     )),
                 SelectableText('${barcodeWifi.ssid}',
                     style: const TextStyle(
                       overflow: TextOverflow.ellipsis,
-                      fontSize: 16,
+                      fontSize: 14,
                     )),
               ],
             ),
@@ -62,12 +63,26 @@ class QRDetail extends StatelessWidget {
                 const Text('Password: ',
                     style: TextStyle(
                       overflow: TextOverflow.ellipsis,
-                      fontSize: 18,
+                      fontSize: 16,
                     )),
                 SelectableText('${barcodeWifi.password}',
                     style: const TextStyle(
                       overflow: TextOverflow.ellipsis,
+                      fontSize: 14,
+                    )),
+              ],
+            ),
+            Row(
+              children: [
+                const Text('Authentication: ',
+                    style: TextStyle(
+                      overflow: TextOverflow.ellipsis,
                       fontSize: 16,
+                    )),
+                SelectableText('${auth[barcodeWifi.encryptionType]}',
+                    style: const TextStyle(
+                      overflow: TextOverflow.ellipsis,
+                      fontSize: 14,
                     )),
               ],
             ),
@@ -235,6 +250,20 @@ class QRDetail extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const Text('Description: ',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                Expanded(
+                  child: SelectableText('${evt.description}',
+                      style: const TextStyle(
+                        overflow: TextOverflow.ellipsis,
+                        fontSize: 18,
+                      )),
+                ),
+              ],
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 const Text('Start: ', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 Expanded(
                   child: SelectableText(
@@ -252,7 +281,7 @@ class QRDetail extends StatelessWidget {
                 const Text('End: ', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 Expanded(
                   child: SelectableText(
-                      evt.start != null ? DateFormat.MMMd().add_jm().format(evt.end!) : '',
+                      evt.end != null ? DateFormat.MMMd().add_jm().format(evt.end!) : '',
                       style: const TextStyle(
                         overflow: TextOverflow.ellipsis,
                         fontSize: 18,
@@ -374,7 +403,6 @@ class QRDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String? title = barcodeLabel[describeEnum(model.type)];
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

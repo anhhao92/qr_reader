@@ -1,13 +1,13 @@
 import 'package:ai_barcode/models/qr_model.dart';
 import 'package:ai_barcode/providers/app_state.dart';
 import 'package:ai_barcode/widgets/ads/ad_banner.dart';
-import 'package:ai_barcode/widgets/barcode/detector_painter.dart';
 import 'package:ai_barcode/widgets/barcode/gallery_mode.dart';
 import 'package:ai_barcode/widgets/barcode/live_mode.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:provider/provider.dart';
 
 enum ScreenMode { liveFeed, gallery }
@@ -23,7 +23,6 @@ class _ScanScreenState extends State<ScanScreen> {
   final BarcodeScanner barcodeScanner = GoogleMlKit.vision.barcodeScanner();
   late CameraDescription camera;
   bool isBusy = false;
-  CustomPaint? customPaint;
   ScreenMode _mode = ScreenMode.gallery;
 
   Future<void> processImage(InputImage inputImage) async {
@@ -33,14 +32,6 @@ class _ScanScreenState extends State<ScanScreen> {
     isBusy = true;
     final barcodes = await barcodeScanner.processImage(inputImage);
     if (barcodes.isNotEmpty) {
-      if (inputImage.inputImageData != null && inputImage.inputImageData != null) {
-        final painter = BarcodeDetectorPainter(
-            barcodes, inputImage.inputImageData!.size, inputImage.inputImageData!.imageRotation);
-        customPaint = CustomPaint(painter: painter);
-        setState(() => customPaint = CustomPaint(painter: painter));
-      } else {
-        setState(() => customPaint = null);
-      }
       if (_mode == ScreenMode.liveFeed) {
         _switchScreenMode();
       }
@@ -110,15 +101,22 @@ class _ScanScreenState extends State<ScanScreen> {
     Widget body;
     if (_mode == ScreenMode.liveFeed) {
       body = LiveMode(
-        customPaint: customPaint,
         camera: camera,
         switchScreenMode: _switchScreenMode,
         processCameraImage: _processCameraImage,
       );
     } else {
-      body = GalleryMode(customPaint: customPaint, processImage: processImage);
+      body = GalleryMode(processImage: processImage);
     }
     return body;
+  }
+
+  void ratingApp() async {
+    final InAppReview inAppReview = InAppReview.instance;
+    if (await inAppReview.isAvailable()) {
+      inAppReview.requestReview();
+    }
+    Navigator.of(context).pop();
   }
 
   @override
@@ -150,6 +148,11 @@ class _ScanScreenState extends State<ScanScreen> {
                 onTap: () => Navigator.of(context).popAndPushNamed('/')),
             ListTile(
                 minLeadingWidth: 20,
+                leading: const Icon(Icons.qr_code_scanner_outlined),
+                title: const Text('Create'),
+                onTap: () => Navigator.of(context).popAndPushNamed('/create')),
+            ListTile(
+                minLeadingWidth: 20,
                 leading: const Icon(Icons.history),
                 title: const Text('History'),
                 onTap: () => Navigator.of(context).popAndPushNamed('/history')),
@@ -157,8 +160,14 @@ class _ScanScreenState extends State<ScanScreen> {
               ListTile(
                   minLeadingWidth: 20,
                   leading: const Icon(Icons.monetization_on),
-                  title: const Text('Remove Ads'),
+                  title: const Text('Remove ads'),
                   onTap: () => Navigator.of(context).popAndPushNamed('/remove-ads')),
+            ListTile(
+              minLeadingWidth: 20,
+              leading: const Icon(Icons.thumb_up),
+              title: const Text('Rating'),
+              onTap: ratingApp,
+            ),
           ],
         )),
         body: Column(
